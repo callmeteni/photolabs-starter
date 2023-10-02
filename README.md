@@ -22,3 +22,9 @@ Read `backend/readme` for further setup details.
 cd backend
 npm start
 ```
+
+
+## Final Product
+
+!["Screenshot of the PhotoLabs Home Page"](https://github.com/callmeteni/photolabs-starter/blob/main/docs/photolab_homepage.png)
+!["Screenshot of the PhotoLabs Home Page with the Onclick Modal"](https://github.com/callmeteni/photolabs-starter/blob/main/docs/photolab_modal.png)

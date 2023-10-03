@@ -12,7 +12,6 @@ const App = () => {
     onLoadTopic,
     onClosePhotoDetailsModal,
   } = useApplicationData();
-  console.log(state);
 
   return (
     <div className="App">

@@ -4,9 +4,9 @@ import TopNavigationBar from 'components/TopNavigationBar';
 
 const HomeRoute = ({photos}) => {
   const [selectedFavourites, setSelectedFavourites] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleFavourites = (photoId) => {
-    console.log(photoId, selectedFavourites);
     if (selectedFavourites.includes(photoId)) {
       setSelectedFavourites((prevSelected) =>
         prevSelected.filter((id) => id !== photoId));
@@ -15,10 +15,21 @@ const HomeRoute = ({photos}) => {
     }
   };
 
-  console.log(selectedFavourites);
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+  };
+
   return (
-    <><TopNavigationBar hasFavourites={selectedFavourites.length > 0} />
-      <PhotoList photoDatas = {photos} selectedFavourites={selectedFavourites} onFavouriteToggle={handleFavourites} /></>
+    <><TopNavigationBar
+      hasFavourites={selectedFavourites.length > 0}
+      onCategorySelect={handleCategorySelect}
+
+    />
+    <PhotoList
+      photoDatas={selectedCategory
+        ? photos.filter((photo) => photo.category === selectedCategory)
+        : photos}      selectedFavourites={selectedFavourites}
+      onFavouriteToggle={handleFavourites} /></>
   );
 };
 

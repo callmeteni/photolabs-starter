@@ -19,6 +19,7 @@ function reducer(state, action) {
     return { ...state, favPhotoIds: state.favPhotoIds.filter(id => id !== action.payload) };
 
   case ACTIONS.SET_PHOTO_DATA:
+    console.log("reducer type phtodata ",action);
     return { ...state, photos: action.payload };
 
   case ACTIONS.SET_TOPIC_DATA:
@@ -78,9 +79,13 @@ const useApplicationData = () => {
 
 
   const getPhotosByTopic = (topicId) => {
-    fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
+    console.log("Inside getPhotosByTopic",topicId);
+    fetch(`/api/topics/photos/${topicId}`)
       .then((response) => response.json())
-      .then((data)=> setPhotoData(data))
+      .then((data)=> {
+        setPhotoData(data);
+        
+      })
       .catch((error) => console.error('Error fetching photos:', error));
   };
 

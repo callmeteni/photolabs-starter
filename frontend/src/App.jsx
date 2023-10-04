@@ -5,18 +5,13 @@ import useApplicationData from './hooks/useApplicationData';
 // Note: Rendering a single component to build components in isolation
 const App = () => {
 
-  const {
-    state,
-    onPhotoSelect,
-    updateToFavPhotoIds,
-    onLoadTopic,
-    onClosePhotoDetailsModal,
-  } = useApplicationData();
-
+  const { state} = useApplicationData();
+  console.log(state.photos);
   return (
     <div className="App">
-      {/* { Array.from(Array(3)).map((_, index) => <PhotoListItem key={index}/>) } */}
-      <HomeRoute photos ={state.photos} selectedFavourites ={state.selectedFavourites}/>
+      <HomeRoute photos ={state.photos}
+        selectedFavourites={state.selectedFavourites}
+        topics={state.topics}/>
       
     </div>
   );

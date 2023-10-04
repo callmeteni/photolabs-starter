@@ -16,6 +16,7 @@ const PhotoList = ({ selectedFavourites, onFavouriteToggle, photoDatas }) => {
   const handleCloseModal = () => {
     setIsModalOpen(false); // Close the modal
   };
+  console.log("Inside photlist", photoDatas);
   return (
     <ul className="photo-list">
       {photoDatas.map((photoData) => (

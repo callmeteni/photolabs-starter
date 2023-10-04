@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import PhotoList from 'components/PhotoList';
 import TopNavigationBar from 'components/TopNavigationBar';
+import useApplicationData from "hooks/useApplicationData";
 
-const HomeRoute = ({photos}) => {
+const HomeRoute = ({photos, topics}) => {
   const [selectedFavourites, setSelectedFavourites] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const {
+    state,
+    updateToFavPhotoIds,
+    setTopicData,
+    getPhotosByTopic,
+  } = useApplicationData();
+
 
   const handleFavourites = (photoId) => {
     if (selectedFavourites.includes(photoId)) {
@@ -15,21 +22,21 @@ const HomeRoute = ({photos}) => {
     }
   };
 
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
+  const handleSelectTopic = (topicId) => {
+    getPhotosByTopic(topicId);
   };
 
   return (
     <><TopNavigationBar
       hasFavourites={selectedFavourites.length > 0}
-      onCategorySelect={handleCategorySelect}
+      onSelectTopic={handleSelectTopic}
+      topics={state.topics}
 
     />
     <PhotoList
-      photoDatas={selectedCategory
-        ? photos.filter((photo) => photo.category === selectedCategory)
-        : photos}      selectedFavourites={selectedFavourites}
-      onFavouriteToggle={handleFavourites} /></>
+      photoDatas={state.photos}
+      selectedFavourites={selectedFavourites}
+      onFavouriteToggle={updateToFavPhotoIds} /></>
   );
 };
 

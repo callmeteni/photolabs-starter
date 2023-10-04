@@ -13,13 +13,18 @@ export const ACTIONS = {
 function reducer(state, action) {
   switch (action.type) {
   case ACTIONS.FAV_PHOTO_ADDED:
-    return { ...state, favPhotoIds: [...state.favPhotoIds, action.payload] };
+    return { ...state, favPhotoIds: [...state.favPhotoIds, action.payload], favoriteStatus: {
+      ...state.favoriteStatus,
+      [action.payload.photoId]: true,
+    }, };
 
   case ACTIONS.FAV_PHOTO_REMOVED:
-    return { ...state, favPhotoIds: state.favPhotoIds.filter(id => id !== action.payload) };
+    return { ...state, favPhotoIds: state.favPhotoIds.filter(id => id !== action.payload), favoriteStatus: {
+      ...state.favoriteStatus,
+      [action.payload.photoId]: false,
+    }, };
 
   case ACTIONS.SET_PHOTO_DATA:
-    console.log("reducer type phtodata ",action);
     return { ...state, photos: action.payload };
 
   case ACTIONS.SET_TOPIC_DATA:
@@ -43,7 +48,7 @@ const useApplicationData = () => {
     favPhotoIds: [],
     topics: [],
     selectedPhoto: null,
-    selectedFavorites: null,
+    selectedFavourites: [],
     isPhotoDetailsModalOpen: false,
   });
 

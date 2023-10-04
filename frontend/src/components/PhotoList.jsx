@@ -30,7 +30,7 @@ const PhotoList = ({ selectedFavourites, onFavouriteToggle, photoDatas }) => {
       {isModalOpen && <PhotoDetailsModal
         isOpen={isModalOpen}
         isSelected = {selectedFavourites.includes(selectedPhoto.id)}
-        onFavouriteToggle = {onFavouriteToggle}
+        onFavouriteToggle = {() => onFavouriteToggle(selectedPhoto.id)}
         onClose={handleCloseModal}
         photoData={selectedPhoto} // Pass the selected photo data to the modal
       />}

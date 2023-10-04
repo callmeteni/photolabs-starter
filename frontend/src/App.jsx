@@ -5,13 +5,17 @@ import useApplicationData from './hooks/useApplicationData';
 // Note: Rendering a single component to build components in isolation
 const App = () => {
 
-  const { state} = useApplicationData();
-  console.log(state.photos);
+  const { state, updateToFavPhotoIds,getPhotosByTopic} = useApplicationData();
+  console.log(state);
   return (
     <div className="App">
       <HomeRoute photos ={state.photos}
         selectedFavourites={state.selectedFavourites}
-        topics={state.topics}/>
+        topics={state.topics}
+        updateToFavPhotoIds ={updateToFavPhotoIds}
+        getPhotosByTopic={getPhotosByTopic}
+        
+      />
       
     </div>
   );

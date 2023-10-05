@@ -6,7 +6,7 @@ import PhotoList from 'components/PhotoList';
 import PhotoFavButton from 'components/PhotoFavButton';
 
 
-const PhotoDetailsModal = ({ isOpen, onClose, photoData, onFavouriteToggle, isSelected }) => {
+const PhotoDetailsModal = ({ isOpen, onClose, photoData, onFavouriteToggle, isSelected, selectedFavourites }) => {
   return (
     <div className={`photo-details-modal ${isOpen ? 'open' : 'close'}`}>
       <button className="photo-details-modal__close-button" onClick={onClose}>
@@ -37,7 +37,7 @@ const PhotoDetailsModal = ({ isOpen, onClose, photoData, onFavouriteToggle, isSe
 
             </div>
             <p>Similar Photos</p>
-            <PhotoList photoDatas={photoData?.similar_photos} selectedFavourites={[]} />
+            <PhotoList photoDatas={photoData?.similar_photos} selectedFavourites={selectedFavourites} />
 
           </div>
 

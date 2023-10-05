@@ -8,24 +8,42 @@ export const ACTIONS = {
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
   SELECT_PHOTO: 'SELECT_PHOTO',
   DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS',
+  TOGGLE_FAV_PHOTO: 'TOGGLE_FAV_PHOTO',
 };
 
 function reducer(state, action) {
   switch (action.type) {
   case ACTIONS.FAV_PHOTO_ADDED:
-    return { ...state, favPhotoIds: [...state.favPhotoIds, action.payload], favoriteStatus: {
+    return { ...state, selectedFavourites: [...state.selectedFavourites, action.payload], favoriteStatus: {
       ...state.favoriteStatus,
       [action.payload.photoId]: true,
     }, };
 
   case ACTIONS.FAV_PHOTO_REMOVED:
-    return { ...state, favPhotoIds: state.favPhotoIds.filter(id => id !== action.payload), favoriteStatus: {
+    return { ...state, selectedFavourites: state.selectedFavourites.filter(id => id !== action.payload), favoriteStatus: {
       ...state.favoriteStatus,
       [action.payload.photoId]: false,
     }, };
 
   case ACTIONS.SET_PHOTO_DATA:
     return { ...state, photos: action.payload };
+
+  case ACTIONS.TOGGLE_FAV_PHOTO:
+    if (state.selectedFavourites.includes(action.payload)) {
+      const updatedState = {
+        ...state,
+        selectedFavourites: [...state.selectedFavourites.filter(element => element !== action.payload)]
+      };
+      return { ...updatedState};
+    } else {
+      const updatedState = {
+        ...state,
+        selectedFavourites: [...state.selectedFavourites, action.payload]
+      };
+      return { ...updatedState};
+    }
+    
+   
 
   case ACTIONS.SET_TOPIC_DATA:
     return { ...state, topics: action.payload };
@@ -45,23 +63,19 @@ const useApplicationData = () => {
   // Initialize your state using useReducer
   const [state, dispatch] = useReducer(reducer, {
     photos: [],
-    favPhotoIds: [],
     topics: [],
     selectedPhoto: null,
     selectedFavourites: [],
     isPhotoDetailsModalOpen: false,
   });
 
-  // Action to update the favorite photo IDs
-  const updateToFavPhotoIds = (newFavPhotoIds) => {
-    dispatch({ type: ACTIONS.FAV_PHOTO_ADDED, payload: newFavPhotoIds });
-  };
+ 
 
-  // Action to remove a favorite photo
-  const removeFavPhotoId = (photoId) => {
-    dispatch({ type: ACTIONS.FAV_PHOTO_REMOVED, payload: photoId });
+  const toggleFavoritePhoto = (photoId) => {
+   
+    dispatch({ type: ACTIONS.TOGGLE_FAV_PHOTO, payload: photoId });
+    
   };
-
   // Action to set the photo data
   const setPhotoData = (photoData) => {
     dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: photoData });
@@ -84,7 +98,6 @@ const useApplicationData = () => {
 
 
   const getPhotosByTopic = (topicId) => {
-    console.log("Inside getPhotosByTopic",topicId);
     fetch(`/api/topics/photos/${topicId}`)
       .then((response) => response.json())
       .then((data)=> {
@@ -117,11 +130,10 @@ const useApplicationData = () => {
 
   return {
     state,
-    updateToFavPhotoIds,
-    removeFavPhotoId,
     setPhotoData,
     setTopicData,
     selectPhoto,
+    toggleFavoritePhoto,
     displayPhotoDetails,
     getPhotosByTopic,
   };

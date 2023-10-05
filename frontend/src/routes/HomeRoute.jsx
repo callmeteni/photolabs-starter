@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import PhotoList from 'components/PhotoList';
 import TopNavigationBar from 'components/TopNavigationBar';
 
-const HomeRoute = ({photos, topics, selectedFavourites, updateToFavPhotoIds,getPhotosByTopic}) => {
-
+const HomeRoute = ({photos, topics, selectedFavourites,getPhotosByTopic,toggleFavoritePhoto }) => {
 
   const handleSelectTopic = (topicId) => {
     getPhotosByTopic(topicId);
@@ -19,7 +18,7 @@ const HomeRoute = ({photos, topics, selectedFavourites, updateToFavPhotoIds,getP
     <PhotoList
       photoDatas={photos}
       selectedFavourites={selectedFavourites}
-      onFavouriteToggle={updateToFavPhotoIds} /></>
+      toggleFavoritePhoto={toggleFavoritePhoto} /></>
   );
 };
 
